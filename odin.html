@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>calculator</title>
+    <style media="screen">
+      div.container{
+        width:300px;
+        height:600px;
+      }
+      div div{
+        width:100px;
+        height:100px;
+        outline:1px solid;
+        float:left;
+        font-size:30px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>calculator</h1>
+    <h2>screen: <span id="screen"></span></h2>
+    <div class="container">
+      <div class="">0</div>
+      <div class="">1</div>
+      <div class="">2</div>
+      <div class="">3</div>
+      <div class="">4</div>
+      <div class="">5</div>
+      <div class="">6</div>
+      <div class="">7</div>
+      <div class="">8</div>
+      <div class="">9</div>
+      <div class="">+</div>
+      <div class="">-</div>
+      <div class="">*</div>
+      <div class="">/</div>
+      <div id="equals" class="">=</div>
+      <div id="clear" class="">clear</div>
+    </div>
+
+  </body>
+  <script type="text/javascript">
+  console.log('hello world');
+  var calculatorArray = [];
+  var calcArr2 = [];
+  var calcArr3 = [];
+  var num = document.querySelectorAll('div div');
+  var equals = document.getElementById("equals")
+  var screen = document.getElementById("screen");
+  var clear = document.getElementById("clear");
+
+  function add(num1, num2){
+    return num1 + num2;
+  }
+
+  function multiply(num1, num2){
+    return num1 * num2;
+  }
+
+  function divide(num1, num2){
+    return num1 / num2;
+  }
+
+  function subtract(num1, num2){
+    return num1 - num2;
+  }
+
+  function createCalcArr2(){
+    for(i = 0; i < calculatorArray.length; i++){
+      console.log(calculatorArray[i]);
+      if(calculatorArray[i] === "="){
+        console.log('found equals');
+        calcArr2 = calculatorArray.splice(calculatorArray[i],i);
+      }
+    }
+  }
+
+  function createCalcArr3(operator){
+    calcArr3 = calcArr2.join("").split(operator);
+  }
+
+  for(i = 0; i < num.length; i++){
+    num[i].addEventListener("click", function(){
+      calculatorArray.push(this.innerHTML);
+      console.log(calculatorArray);
+    })
+  }
+
+equals.addEventListener("click", function(){
+  createCalcArr2();
+
+    for(i = 0; i < calcArr2.length; i++){
+
+        if(calcArr2[i] === "+"){
+          createCalcArr3(calcArr2[i]);
+          screen.innerHTML = add(parseInt(calcArr3[0]), parseInt(calcArr3[1]));
+          }
+
+        if(calcArr2[i] === "*"){
+          createCalcArr3(calcArr2[i]);
+          screen.innerHTML = multiply(parseInt(calcArr3[0]), parseInt(calcArr3[1]));
+        }
+        if(calcArr2[i] === "/"){
+          createCalcArr3(calcArr2[i]);
+          screen.innerHTML = divide(parseInt(calcArr3[0]), parseInt(calcArr3[1]));
+        }
+        if(calcArr2[i] === "-"){
+          createCalcArr3(calcArr2[i]);
+          screen.innerHTML = subtract(parseInt(calcArr3[0]), parseInt(calcArr3[1]));
+        }
+    }
+})
+
+      clear.addEventListener("click", function(){
+        screen.innerHTML = "";
+        calculatorArray = [];
+      })
+
+
+  </script>
+</html>
